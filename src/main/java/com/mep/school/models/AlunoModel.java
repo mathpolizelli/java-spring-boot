@@ -1,5 +1,6 @@
 package com.mep.school.models;
 
+import com.mep.school.enums.EstudanteEnum;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,6 +13,16 @@ public class AlunoModel {
     private String nome;
     private String matricula;
     private String endereco;
+
+    public EstudanteEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(EstudanteEnum status) {
+        this.status = status;
+    }
+
+    private EstudanteEnum status;
 
     public AlunoModel() {}
 
