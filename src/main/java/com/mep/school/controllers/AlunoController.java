@@ -3,8 +3,11 @@ package com.mep.school.controllers;
 import com.mep.school.models.AlunoModel;
 import com.mep.school.services.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -15,13 +18,16 @@ public class AlunoController {
     private AlunoService alunoService;
 
     @PostMapping
-    public AlunoModel criarAluno(@RequestBody AlunoModel alunoModel) {
-        return alunoService.criarAluno(alunoModel);
+    public ResponseEntity<AlunoModel> criarAluno(@RequestBody AlunoModel alunoModel) {
+        AlunoModel request = alunoService.criarAluno(alunoModel);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(alunoModel.getId()).toUri();
+        return ResponseEntity.created(uri).body(request);
     }
 
     @GetMapping
-    public List<AlunoModel> buscarTodosAlunos() {
-        return alunoService.findAll();
+    public ResponseEntity<List<AlunoModel>> buscarTodosAlunos() {
+        List<AlunoModel> request = alunoService.findAll();
+        return ResponseEntity.ok().body(request);
     }
 
     @GetMapping("/{id}")
